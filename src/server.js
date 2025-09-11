@@ -13,7 +13,7 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
-
+app.use(cors());
 // Configuração e conexão com o banco de dados
 const DB_CONNECTION_STRING = 'mongodb+srv://muriloapolo:3DehqxNjNSloPV6R@db-unijorge-backend.xp0rfcg.mongodb.net/?retryWrites=true&w=majority&appName=db-unijorge-backend';
 mongoose.connect(DB_CONNECTION_STRING);
@@ -24,11 +24,11 @@ db.once('open', () => console.log('Conectado ao Banco de Dados!'));
 
 // Middleware para permitir requisições de diferentes origens (CORS).
 // O asterisco '*' permite qualquer origem.
-app.use(cors());
+
 
 // Se o problema persistir, adicione esta linha para lidar explicitamente
 // com as requisições OPTIONS em todas as rotas.
-app.options('*', cors());
+// app.options('*', cors());
 
 app.use(express.json());
 

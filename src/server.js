@@ -15,7 +15,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 app.use(cors());
 // Configuração e conexão com o banco de dados
-const DB_CONNECTION_STRING = 'mongodb+srv://muriloapolo:3DehqxNjNSloPV6R@db-unijorge-backend.xp0rfcg.mongodb.net/?retryWrites=true&w=majority&appName=db-unijorge-backend';
+const DB_CONNECTION_STRING = process.env.DB_CONNECTION_STRING;
 mongoose.connect(DB_CONNECTION_STRING);
 
 const db = mongoose.connection;

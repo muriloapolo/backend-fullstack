@@ -24,20 +24,8 @@ db.on('error', (error) => console.error('Erro de conexão com o banco de dados:'
 db.once('open', () => console.log('Conectado ao Banco de Dados!'));
 
 // Middleware para permitir requisições de diferentes origens (CORS)
-const allowedOrigins = [
-  'http://localhost:5173', 
-  'https://login-unijorge-vue.netlify.app' // A URL real do seu frontend
-];
-
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'A origem da requisição não é permitida pelo CORS.';
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  },
+  origin: '*', // Permite todas as origens para simplificar o teste. Para produção, é recomendado especificar a URL do front-end.
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type'],
 }));

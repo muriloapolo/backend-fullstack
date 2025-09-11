@@ -5,8 +5,8 @@
   "license": "ISC",
   "author": "Murilo Apolonio",
   "type": "module",
-  "engines": {
-    "node": "22.x"
+  "engines": {    
+      "node": "18.x"     
   },
   "main": "./src/server.js",
   "scripts": {

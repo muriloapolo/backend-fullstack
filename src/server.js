@@ -35,6 +35,9 @@ app.use(express.json());
 // ======================================
 // Rotas de Cadastro
 // ======================================
+app.get('/', async (req, res)=>{
+  res.send("Hello World");
+})
 
 // Rota para cadastrar um novo secretário e sua senha
 app.post('/api/secretarios/register', async (req, res) => {

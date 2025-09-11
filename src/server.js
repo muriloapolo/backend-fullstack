@@ -9,7 +9,6 @@ import bcrypt from 'bcrypt';
 import cors from 'cors';
 
 // Carrega as variáveis de ambiente do arquivo .env
-// Este é o lugar correto para chamar o .config()
 dotenv.config();
 
 const app = express();
@@ -23,32 +22,19 @@ const db = mongoose.connection;
 db.on('error', (error) => console.error('Erro de conexão com o banco de dados:', error));
 db.once('open', () => console.log('Conectado ao Banco de Dados!'));
 
-// Middleware para permitir requisições de diferentes origens (CORS)
-const allowedOrigins = [
-  'http://localhost:5173', 
-  'https://login-unijorge-vue.netlify.app' // A URL real do seu frontend
-];
+// Middleware para permitir requisições de diferentes origens (CORS).
+// O asterisco '*' permite qualquer origem.
+app.use(cors());
 
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'A origem da requisição não é permitida pelo CORS.';
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type'],
-}));
+// Se o problema persistir, adicione esta linha para lidar explicitamente
+// com as requisições OPTIONS em todas as rotas.
+app.options('*', cors());
 
 app.use(express.json());
-
 
 // ======================================
 // Rotas de Cadastro
 // ======================================
-
 
 // Rota para cadastrar um novo secretário e sua senha
 app.post('/api/secretarios/register', async (req, res) => {

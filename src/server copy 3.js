@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv'
+
 import Paciente from './models/Paciente.js';
 import Medico from './models/Medico.js';
 import Agendamento from './models/Agendamento.js';
@@ -8,11 +8,8 @@ import Secretario from './models/Secretario.js';
 import bcrypt from 'bcrypt';
 import cors from 'cors';
 
-// Carrega as variáveis de ambiente do arquivo .env
-// Este é o lugar correto para chamar o .config()
-dotenv.config();
-
 const app = express();
+
 const port = process.env.PORT || 3000;
 
 // Configuração e conexão com o banco de dados
@@ -75,14 +72,7 @@ app.post('/api/medicos/register', async (req, res) => {
       return res.status(400).json({ message: 'Todos os campos do médico são obrigatórios.' });
     }
 
-    // Procura por e-mail, CPF ou CRM
-    const medicoExistente = await Medico.findOne({
-      $or: [
-        { email: email },
-        { cpf: cpf },
-        { crm: crm }
-      ]
-    });
+    const medicoExistente = await Medico.findOne({ email });
     if (medicoExistente) {
       return res.status(409).json({ message: 'Este e-mail, CPF ou CRM já está em uso.' });
     }
@@ -94,7 +84,7 @@ app.post('/api/medicos/register', async (req, res) => {
     res.status(201).json({ message: 'Médico cadastrado com sucesso!' });
   } catch (error) { 
     console.error('Erro no registro do médico:', error);
-    res.status(500).json({ message: 'Erro interno do servidor.' });
+    res.status(500).json({ message: 'Erro interno do servidor, CPF / CRM já cadastradaso.' });
   }
 });
 
@@ -107,13 +97,7 @@ app.post('/api/pacientes/register', async (req, res) => {
       return res.status(400).json({ message: 'Nome, e-mail, CPF, telefone e CEP são obrigatórios.' });
     }
 
-    // Procura por e-mail ou CPF
-    const pacienteExistente = await Paciente.findOne({
-      $or: [
-        { email: email },
-        { cpf: cpf }
-      ]
-    });
+    const pacienteExistente = await Paciente.findOne({ email });
     if (pacienteExistente) {
       return res.status(409).json({ message: 'Este e-mail ou CPF já está em uso.' });
     }
@@ -138,9 +122,13 @@ app.post('/api/secretarios/login', async (req, res) => {
     const { email, password } = req.body;
 
     const secretario = await Secretario.findOne({ email });
-    
-    // Unifica a verificação de usuário e senha
-    if (!secretario || !(await bcrypt.compare(password, secretario.password))) {
+    if (!secretario) {
+      return res.status(401).json({ message: 'E-mail ou senha inválidos.' });
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, secretario.password);
+
+    if (!isPasswordValid) {
       return res.status(401).json({ message: 'E-mail ou senha inválidos.' });
     }
 

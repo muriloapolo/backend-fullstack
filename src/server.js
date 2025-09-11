@@ -8,7 +8,7 @@ import bcrypt from 'bcrypt';
 import cors from 'cors';
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Configuração e conexão com o banco de dados
 const DB_CONNECTION_STRING = 'mongodb+srv://muriloapolo:3DehqxNjNSloPV6R@db-unijorge-backend.xp0rfcg.mongodb.net/?retryWrites=true&w=majority&appName=db-unijorge-backend';

@@ -28,7 +28,7 @@ db.once('open', () => console.log('Conectado ao Banco de Dados!'));
 
 // Se o problema persistir, adicione esta linha para lidar explicitamente
 // com as requisições OPTIONS em todas as rotas.
-// app.options('*', cors());
+app.options('*', cors());
 
 app.use(express.json());
 

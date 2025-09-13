@@ -5,8 +5,8 @@
   "license": "ISC",
   "author": "Murilo Apolonio",
   "type": "module",
-  "engines": {    
-      "node": "22.x"     
+  "engines": {
+    "node": "22.x"
   },
   "main": "./src/server.js",
   "scripts": {
@@ -23,7 +23,8 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.19.0",
-    "mongoose": "^8.18.1"
+    "mongoose": "^8.18.1",
+    "regex": "^6.0.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"

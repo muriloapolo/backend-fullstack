@@ -45,7 +45,7 @@ router.post('/register/paciente', async (req, res) => {
 router.post('/register/secretario', async (req, res) => {
     const { nome, email, cpf, telefone, password } = req.body;
     try {
-        let secretario = await Secretario.findOne({ email });
+        let secretario = await Secretario.findOne({ cpf });
         if (secretario) {
             return res.status(400).json({ message: 'Secretário já existe.' });
         }
@@ -76,8 +76,8 @@ router.post('/login', async (req, res) => {
         }
 
         // Se as credenciais estiverem corretas, cria um token JWT
-        const payload = { 
-            user: { 
+        const payload = {
+            user: {
                 id: secretario.id,
                 role: 'secretario'
             }

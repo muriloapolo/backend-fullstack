@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken';
 
 // Adicione uma chave secreta para a sua aplicação
-const JWT_SECRET = '3DehqxNjNSloPV6R';
+// const JWT_SECRET = '3DehqxNjNSloPV6R';
+const JWT_SECRET = process.env.JWT_SECRET;
 
 function auth(req, res, next) {
     const token = req.header('Authorization');

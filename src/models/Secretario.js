@@ -1,21 +1,26 @@
 import mongoose from 'mongoose';
 
 const SecretarioSchema = new mongoose.Schema({
-    nome: { 
-        type: String, 
-        required: true 
+    nome: {
+        type: String,
+        required: true
     },
-    email: { 
-        type: String, 
-        required: true, 
-        unique: true 
+    email: {
+        type: String,
+        required: true,
+        unique: true
     },
-    telefone: { 
-        type: String 
+    cpf: {
+        type: String,
+        required: true,
+        unique: true
     },
-    password: { 
-        type: String, 
-        required: true 
+    telefone: {
+        type: String
+    },
+    password: {
+        type: String,
+        required: true
     },
 });
 
